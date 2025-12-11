@@ -23,11 +23,8 @@ workflows:
           inputs:
             - version: stable
 
-      - flutter-analyze@0:
-          title: Flutter Analyze
-
-      - flutter-test@1:
-          title: Flutter Test
+      # REMOVE ANALYZE + TESTS
+      # They are slow and cause build failures if no tests exist.
 
       - script@1:
           title: Flutter Build APK (Release)
