@@ -1,0 +1,78 @@
+---
+format_version: "11"
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+
+project_type: flutter
+
+trigger_map:
+  - push_branch: main
+    workflow: android_release
+  - pull_request_source_branch: "*"
+    workflow: android_release
+
+workflows:
+  android_release:
+    summary: Build & Deploy Android Release APK to Firebase App Distribution
+    steps:
+
+      - git-clone@8:
+          title: Clone repository
+
+      - flutter-installer@0:
+          title: Install Flutter SDK
+          inputs:
+            - version: stable
+
+      - flutter-analyze@0:
+          title: Flutter Analyze
+
+      - flutter-test@1:
+          title: Flutter Test
+
+      - script@1:
+          title: Flutter Build APK (Release)
+          inputs:
+            - content: |-
+                #!/usr/bin/env bash
+                set -ex
+
+                echo "Building Android APK..."
+                flutter build apk --release
+
+                APK_PATH="build/app/outputs/flutter-apk/app-release.apk"
+
+                if [ ! -f "$APK_PATH" ]; then
+                  echo "ERROR: APK not found!"
+                  exit 1
+                fi
+
+                echo "APK built successfully."
+                envman add --key APK_PATH --value "$APK_PATH"
+
+      - script@1:
+          title: Upload to Firebase App Distribution
+          inputs:
+            - content: |-
+                #!/usr/bin/env bash
+                set -ex
+
+                echo "Installing Firebase CLI..."
+                npm install -g firebase-tools
+
+                echo "Uploading APK to Firebase App Distribution..."
+
+                firebase appdistribution:distribute "$APK_PATH" \
+                  --app "$FIREBASE_APP_ID_ANDROID" \
+                  --token "$FIREBASE_TOKEN" \
+                  --groups "testers"
+
+                echo "Upload successful!"
+
+      - deploy-to-bitrise-io@2:
+          inputs:
+            - is_compress: "false"
+
+app:
+  envs:
+    - BITRISE_FLUTTER_PROJECT_LOCATION: "."
+    - FLUTTER_VERSION: stable
