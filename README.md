@@ -7,21 +7,21 @@ A modern, feature-rich Flutter application for tracking personal expenses and ma
 ### Welcome & Authentication
 <p align="center">
   <img src="photos/Picture1.png" width="250" />
-  <img src="screenshots/Picture2.png" width="250" />
+  <img src="photos/Picture2.png" width="250" />
 </p>
 
 ### Main Features
 <p align="center">
-  <img src="screenshots/Picture3.png" width="250" />
-  <img src="screenshots/Picture4.png" width="250" />
-  <img src="screenshots/Picture5.png" width="250" />
-  <img src="screenshots/Picture6.png" width="250" />
+  <img src="photos/Picture3.png" width="250" />
+  <img src="photos/Picture4.png" width="250" />
+  <img src="photos/Picture5.png" width="250" />
+  <img src="photos/Picture6.png" width="250" />
 </p>
 
 ### Budget & Settings
 <p align="center">
-  <img src="screenshots/Picture7.png" width="250" />
-  <img src="screenshots/Picture8.png" width="250" />
+  <img src="photos/Picture7.png" width="250" />
+  <img src="photos/Picture8.png" width="250" />
 </p>
 
 ## ✨ Features
